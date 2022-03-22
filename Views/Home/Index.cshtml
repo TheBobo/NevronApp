@@ -1,0 +1,77 @@
+﻿
+
+        <h1>Header</h1>
+
+        <h3>Subheader</h3>
+
+        <div class="btn-wrapper">
+            <span class="btn" onclick="addNumber()">Add Numbers</span>
+
+            <span class="btn" onclick="sumNumber()">Sum Numbers</span>
+
+            <span class="btn" onclick="clearNumbers()">Clear</span>
+        </div>
+
+        <div id="number-wrapper">
+            @{Html.RenderPartial("_numbers");}
+        </div>
+        <p class="lbl">
+            Count:
+            <span id="count"></span>
+        </p>
+
+
+        <p class="lbl">
+            Sum:
+            <span id="sum">Not summed</span>
+        </p>
+
+<script>
+    var addNumber = function () {
+        $.ajax({
+            type: "POST",
+            url: "/home/addNumber",
+            success: function (response) {
+                $("#number-wrapper").html(response);
+                updateCount();
+            }
+        })
+    }
+
+    var sumNumber = function () {
+        $.ajax({
+            type: "POST",
+            url: "/home/sumNumber",
+            success: function (response) {
+                if (response.result != null) {
+
+                    printSumText(response.result)
+                }
+                else {
+                    printSumText("Not summed");
+                }
+            }
+        })
+    }
+
+    var clearNumbers = function () {
+        $.ajax({
+            type: "POST",
+            url: "/home/ClearNumbers",
+            success: function () {
+                $("#number-wrapper").html("");
+                updateCount();
+                printSumText("Not summed");
+            }
+        })
+    }
+
+    function updateCount() {
+        var count = $("#number-wrapper").children().length;
+        $("#count").text(count);
+    }
+
+    function printSumText(text) {
+        $("#sum").text(text)
+    }
+</script>
