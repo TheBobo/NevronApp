@@ -23,7 +23,7 @@ namespace NevronApp.Controllers
             int newNumber = rnd.Next(1001);
             numbers.Add(newNumber);
 
-            SetSestion(numbers);
+            SetSession(numbers);
             return PartialView("_numbers"); ;
         }
 
@@ -66,7 +66,7 @@ namespace NevronApp.Controllers
             return numbers;
         }
 
-        private void SetSestion(List<int> numbers)
+        private void SetSession(List<int> numbers)
         {
             Session["numbers"] = numbers;
         }
